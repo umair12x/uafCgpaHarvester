@@ -1,26 +1,47 @@
 const scraper = require("../utils/scraper");
 
-// ? route for home page
 const homeHandler = async (req, res) => {
-  let result = null;
-  res.status(200).json({ home: "Home" });
+  return res.status(200).json({ type: "info", message: "Result Scraper Home" });
 };
 
-// ? post route for result
 const resultHandler = async (req, res) => {
   try {
     const { regNo } = req.body;
-    if (!regNo || regNo.length === 0) {
-      return res.status(400).json({ message: "Fields are required" });
+
+    if (!regNo || regNo.trim().length === 0) {
+      return res.status(400).json({
+        type: "error",
+        message: "Registration number is required",
+      });
     }
 
-    const { studentName, registrationNo, Cgpa, result } = await scraper(regNo.trim());
-    res
-      .status(200)
-      .json({ name: studentName, regNumber: registrationNo, Cgpa ,result});
+    console.log(`🔍 Fetching result for ${regNo}...`);
+
+    const data = await scraper(regNo.trim());
+
+    if (!data || data.success === false) {
+      return res.status(data.type === "error" ? 500 : 400).json({
+        type: data.type || "error",
+        message: data.message || "Failed to fetch result",
+        details: data.details || null,
+      });
+    }
+
+    // Send clean and readable response
+    return res.status(200).json({
+      type: "success",
+      message: data.message,
+      studentName: data.studentName,
+      registrationNo: data.registrationNo,
+      Cgpa: data.Cgpa,
+      result: data.result,
+    });
   } catch (err) {
-    console.error(err.message);
-    res.status(500).json({ message: "Server Error" });
+    console.error("❌ Server Error:", err.message);
+    return res.status(500).json({
+      type: "error",
+      message: "Internal server error, please try again later",
+    });
   }
 };
 

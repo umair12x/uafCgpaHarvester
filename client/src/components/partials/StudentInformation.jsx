@@ -1,7 +1,7 @@
 import React from "react";
-import { FaIdCardAlt } from "react-icons/fa"; // Changed icon for registration number
-import { FaUserGraduate } from "react-icons/fa"; // Changed icon for student name
-import { FaAward } from "react-icons/fa"; // Changed icon for CGPA
+import { FaIdCardAlt } from "react-icons/fa";
+import { FaUserGraduate } from "react-icons/fa";
+import { FaAward } from "react-icons/fa";
 import { NumberTicker } from "./NumberTicker";
 
 const StudentInformation = ({ studentRespone }) => {
@@ -19,33 +19,33 @@ const StudentInformation = ({ studentRespone }) => {
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {/* Registration Number */}
             <div className="flex flex-col items-center space-y-3 group p-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300">
-              <div className="w-12 h-12 bg-primary dark:text-white text-gray-800   rounded-full flex items-center justify-center shadow-lg">
+              <div className="w-12 h-12 primary-boxes dark:text-white text-gray-800   rounded-full flex items-center justify-center shadow-lg">
                 <FaIdCardAlt size={20} />
               </div>
               <p className="font-medium text-sm text-gray-700 dark:text-gray-300">
                 Registration No:
               </p>
               <p className="text-gray-800 dark:text-gray-200 text-base font-semibold">
-                {studentRespone.regNumber}
+                {studentRespone.registrationNo}
               </p>
             </div>
 
             {/* Name */}
             <div className="flex flex-col items-center space-y-3 group p-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300">
-              <div className="w-12 h-12 bg-primary  dark:text-white text-gray-800 rounded-full flex items-center justify-center shadow-lg">
+              <div className="w-12 h-12 primary-boxes  dark:text-white text-gray-800 rounded-full flex items-center justify-center shadow-lg">
                 <FaUserGraduate size={20} />
               </div>
               <p className="font-medium text-sm text-gray-700 dark:text-gray-300">
                 Student Name:
               </p>
               <p className="text-gray-800 dark:text-gray-200 text-base font-semibold">
-                {studentRespone.name}
+                {studentRespone.studentName}
               </p>
             </div>
 
             {/* CGPA */}
             <div className="flex flex-col items-center space-y-3 group p-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300">
-              <div className="w-12 h-12 bg-primary  dark:text-white text-gray-800 rounded-full flex items-center justify-center shadow-lg">
+              <div className="w-12 h-12 primary-boxes  dark:text-white text-gray-800 rounded-full flex items-center justify-center shadow-lg">
                 <FaAward size={20} />
               </div>
               <p className="font-medium text-sm text-gray-700 dark:text-gray-300">

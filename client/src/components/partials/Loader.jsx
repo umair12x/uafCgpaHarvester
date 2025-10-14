@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 const Loader = () => {
   return (
@@ -14,7 +14,7 @@ const Loader = () => {
       </div>
     </StyledWrapper>
   );
-}
+};
 
 const StyledWrapper = styled.div`
   .book,
@@ -23,11 +23,11 @@ const StyledWrapper = styled.div`
     animation: cover 5s ease-in-out infinite;
   }
   .book {
-    background-color: hsl(268, 90%, 65%);
+         background-color: #b7870f;
+
     border-radius: 0.25em;
-    box-shadow:
-      0 0.25em 0.5em hsla(0, 0%, 0%, 0.3),
-      0 0 0 0.25em hsl(278, 100%, 57%) inset;
+    box-shadow: 0 0.25em 0.5em hsla(0, 0%, 0%, 0.3),
+      0 0 0 0.25em #d3a410 inset;
     padding: 0.25em;
     perspective: 37.5em;
     position: relative;
@@ -76,9 +76,7 @@ const StyledWrapper = styled.div`
       linear-gradient(90deg, hsla(223, 10%, 90%, 0) 87.5%, hsl(223, 10%, 90%));
     background-repeat: no-repeat;
     background-position: center;
-    background-size:
-      2.5em 4.125em,
-      100% 100%;
+    background-size: 2.5em 4.125em, 100% 100%;
   }
   .book__pg--2 {
     animation-name: pg2;
@@ -110,14 +108,16 @@ const StyledWrapper = styled.div`
     95%,
     to {
       animation-timing-function: ease-out;
-      background-color: hsl(278, 84%, 67%);
+            background-color: #b7870f;
+
     }
     10%,
     40%,
     60%,
     90% {
       animation-timing-function: ease-in;
-      background-color: hsl(271, 90%, 45%);
+      background-color: #b7870f;
+;
     }
   }
   @keyframes shadow {
@@ -337,6 +337,7 @@ const StyledWrapper = styled.div`
       background-color: hsl(223, 10%, 100%);
       transform: translate3d(0, 0, 1px) rotateY(0);
     }
-  }`;
+  }
+`;
 
 export default Loader;

@@ -3,21 +3,23 @@ import { FaIdCardClip } from "react-icons/fa6";
 import Input from "./partials/Input";
 import MagicButton from "./partials/MagicButton";
 import { motion } from "framer-motion";
-// import { ClipLoader } from "react-spinners";
 import Loader from "./partials/Loader";
 
-const StudentResultSearch = ({ setStudentResponse }) => {
+const StudentResultSearch = ({ setStudentResponse, setAlertMessage }) => {
   const [regNo, setregNo] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!regNo.trim()) {
-      alert("Credentials are required");
+      setAlertMessage({
+        type: "error",
+        message: "Please enter a valid register number.",
+      });
       return;
     }
 
-    setLoading(true); // Start loading
+    setLoading(true);
 
     try {
       const userData = { regNo: regNo.trim() };
@@ -34,10 +36,18 @@ const StudentResultSearch = ({ setStudentResponse }) => {
       const data = await response.json();
       console.log("Response:", data);
       setStudentResponse(data);
+      setAlertMessage({
+        type: data.type,
+        message: data.message,
+      });
     } catch (error) {
+      setAlertMessage({
+        type: data.type,
+        message: data.message,
+      });
       console.error("Error:", error);
     } finally {
-      setLoading(false); // Stop loading after request completes
+      setLoading(false);
     }
   };
 
@@ -54,31 +64,34 @@ const StudentResultSearch = ({ setStudentResponse }) => {
       <hr className="border-gray-300 my-5 dark:border-gray-600" />
 
       <form onSubmit={handleSubmit}>
-        <label
-          htmlFor="register"
-          className="flex secondary-text items-center gap-1  font-medium mb-3"
-        >
-          <FaIdCardClip />
-          Register:
-        </label>
-        <div className="mb-4 gap-0.5 md:gap-2 flex items-center">
-          {/* Disable input when loading */}
-          <Input value={regNo} setregNo={setregNo} disabled={loading} />
+  <label
+    htmlFor="register"
+    className="flex secondary-text items-center gap-1 font-medium mb-3"
+  >
+    <FaIdCardClip />
+    Register:
+  </label>
 
-          <div className="min-h-[40px] min-w-[40px] max-h-[50px] cursor-pointer flex items-center justify-center">
-            {loading ? (
-              <>&nbsp;</>
-            ) : (
-              <MagicButton disabled={loading} text={"Calc..."} /> // Button when not loading
-            )}
-          </div>
-        </div>
-        {loading && (
-          <div className="flex m-5 p-10 items-center justify-center">
-            <Loader />
-          </div>
-        )}
-      </form>
+  <div className="mb-4 gap-0.5 md:gap-2 flex items-center">
+    {/* Disable input when loading */}
+    <Input value={regNo} setregNo={setregNo} disabled={loading} />
+
+    {/* MagicButton directly handles button logic */}
+    {loading ? (
+      <div className="min-h-[40px] min-w-[40px] max-h-[50px] flex items-center justify-center">
+        &nbsp;
+      </div>
+    ) : (
+      <MagicButton disabled={loading} text="Calc..." />
+    )}
+  </div>
+
+  {loading && (
+    <div className="flex m-5 p-10 items-center justify-center">
+      <Loader />
+    </div>
+  )}
+</form>
     </motion.div>
   );
 };

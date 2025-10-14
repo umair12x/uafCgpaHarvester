@@ -88,26 +88,40 @@ const TableComponent = ({ studentRespone }) => {
                         </thead>
 
                         {/* Table Body */}
-                        <tbody className="divide-y divide-gray-200 dark:divide-gray-600">
+                        <tbody className="divide-y gap-y-10.5 divide-gray-200 dark:divide-gray-600">
                           {result.subjects.map((subject) => (
                             <tr
                               key={subject.courseCode}
                               className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-300"
                             >
                               <td className="px-2 py-2 sm:px-4 sm:py-3 text-gray-800 dark:text-gray-200 font-medium">
-                                {subject.courseCode}
+                                {subject.code}
                               </td>
                               <td className="px-2 py-2 sm:px-4 sm:py-3 text-gray-800 dark:text-gray-200 text-center">
-                                {subject.creditHours}
+                                {subject.ch}
                               </td>
                               <td className="px-2 py-2 sm:px-4 sm:py-3 text-gray-800 dark:text-gray-200 text-center">
-                                {subject.obtainedMarks}
+                                {subject.marks}
                               </td>
-                              <td className="px-2 py-2 sm:px-4 sm:py-3 text-gray-800 dark:text-gray-200 text-center grade-B">
-                                {subject.grade}
+                              <td className=" sm:px-4 sm:py-3 text-gray-800 dark:text-gray-200 text-center">
+                                <span
+                                  className={` p-2 rounded-lg ${
+                                    subject.grade === "F"
+                                      ? "text-red-800  bg-red-50 "
+                                      : subject.grade === "D"
+                                      ? "text-orange-800 bg-yellow-100 "
+                                      : subject.grade === "C"
+                                      ? "text-gray-800 bg-gray-100 "
+                                      : subject.grade === "A"
+                                      ? "text-green-800 bg-green-100 "
+                                      : "text-blue-800 bg-blue-50 "
+                                  } `}
+                                >
+                                  {subject.grade}
+                                </span>
                               </td>
                               <td className="px-2 py-2 sm:px-4 sm:py-3 text-gray-800 dark:text-gray-200 text-center">
-                                {subject.qualityPoints}
+                                {Math.round(subject.qp)}
                               </td>
                             </tr>
                           ))}

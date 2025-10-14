@@ -1,13 +1,20 @@
 import { useEffect, useState, useRef } from "react";
 
 export function NumberTicker({ value, decimalPlaces = 3, className = "" }) {
-  const [displayValue, setDisplayValue] = useState(value.toFixed(decimalPlaces));
-  const animationRef = useRef(null); // To track animation frames
+  const safeValue = typeof value === "number" && !isNaN(value) ? value : 0;
+  const [displayValue, setDisplayValue] = useState(
+    safeValue.toFixed(decimalPlaces)
+  );
+  const animationRef = useRef(null);
 
   useEffect(() => {
-    if (animationRef.current) {
-      cancelAnimationFrame(animationRef.current); // Cancel any ongoing animation
+    // Prevent animation if value is not valid
+    if (typeof value !== "number" || isNaN(value)) {
+      setDisplayValue("0.000"); // Fallback display
+      return;
     }
+
+    if (animationRef.current) cancelAnimationFrame(animationRef.current);
 
     const startValue = parseFloat(displayValue);
     const endValue = value;
@@ -28,11 +35,13 @@ export function NumberTicker({ value, decimalPlaces = 3, className = "" }) {
     animationRef.current = requestAnimationFrame(animate);
 
     return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
+      if (animationRef.current) cancelAnimationFrame(animationRef.current);
     };
   }, [value, decimalPlaces]);
 
-  return <span className={className}>{displayValue}</span>;
+  return (
+    <span className={className}>
+      {isNaN(displayValue) ? "0.000" : displayValue}
+    </span>
+  );
 }

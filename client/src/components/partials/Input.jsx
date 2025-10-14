@@ -1,6 +1,5 @@
 import React from "react";
 import { useState } from "react";
-import { FiSearch } from "react-icons/fi";
 
 const Input = ({ value, setregNo }) => {
   const [label, setlabel] = useState("");

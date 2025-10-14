@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import NavBar from "./components/navbar";
 import MyFooter from "./components/MyFooter";
@@ -9,15 +9,24 @@ import Hero from "./components/Hero";
 import "./App.css";
 import Contact from "./components/Contact";
 import About from "./components/About";
+import { Alert } from "./components/partials/Alert";
 
 const App = () => {
+  const [alertMessage, setAlertMessage] = useState({
+    type: "",
+    message: "",
+  });
+  useEffect(() => {
+    if (alertMessage.message) {
+      const timer = setTimeout(() => {
+        setAlertMessage({ type: "", message: "" });
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [alertMessage]);
+
   return (
-    <div
-      className={cn(
-        "w-full h-full overflow-x-hidden",
-        "bg-white dark:bg-gradient-to-r from-gray-800 via-gray-900 to-[#0b0514]"
-      )}
-    >
+    <div className="w-full h-full overflow-x-hiddenbg-white dark:bg-gradient-to-r from-gray-800 via-gray-900 to-[#0b0514]">
       {/* SEO Meta Tags */}
       <Helmet>
         <title>UAF Cgpa Calculator-Umair </title>
@@ -48,8 +57,6 @@ const App = () => {
         <meta property="og:url" content="https://yourwebsite.com/" />
         <meta property="og:type" content="website" />
 
-       
-
         {/* JSON-LD Structured Data */}
         <script type="application/ld+json">
           {JSON.stringify({
@@ -67,15 +74,22 @@ const App = () => {
         </script>
       </Helmet>
 
-        <NavBar className="z-100" />
-        <main className={cn("container z-30 mx-auto px-4")}>
-          <Hero className={cn("z-50 ")} />
-          <Output className="z-10" />
-          <About />
-          <Contact />
-          <UseAccordian />
-        </main>
-        <MyFooter  />
+      <NavBar className="z-100" />
+      <main className={cn("container z-30 mx-auto px-4")}>
+        {alertMessage && (
+          <div className="fixed top-1 right-4 z-50 animate-slideIn  cursor-not-allowed  rounded-md">
+            <Alert
+              alertMessage={alertMessage}
+            />
+          </div>
+        )}
+        <Hero className={cn("z-50 ")} />
+        <Output className="z-10" setAlertMessage={setAlertMessage} />
+        <About />
+        <Contact />
+        <UseAccordian />
+      </main>
+      <MyFooter />
     </div>
   );
 };

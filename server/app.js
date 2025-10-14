@@ -11,7 +11,7 @@ const router = require("./routes/result-route.js");
 const corsOptions = {
   origin: "http://localhost:5173", // Removed trailing slash
   methods: "GET,POST,PUT,PATCH,HEAD",
-  credentials: true, // Fixed typo (was "Credential")
+  credentials: true, 
 };
 
 app.use(cors(corsOptions));

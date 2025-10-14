@@ -1,10 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 
-const MagicButton = ({ text }) => {
+const MagicButton = ({ text, disabled }) => {
   return (
     <StyledWrapper>
-      <button type="submit" className="button">
+      <button
+        type="submit"
+        className="button"
+        disabled={disabled} // handle disabling internally
+      >
         <span className="fold" />
         <div className="points_wrapper">
           <i className="point" />
@@ -31,7 +35,7 @@ const MagicButton = ({ text }) => {
           >
             <polyline points="13.18 1.37 13.18 9.64 21.45 9.64 10.82 22.63 10.82 14.36 2.55 14.36 13.18 1.37" />
           </svg>
-         {text}
+          {text}
         </span>
       </button>
     </StyledWrapper>
@@ -54,10 +58,10 @@ const StyledWrapper = styled.div`
     transition: all 0.25s ease;
     background: radial-gradient(
         65.28% 65.28% at 50% 100%,
-        rgba(223, 113, 255, 0.8) 0%,
+        #d3a410 0%,
         rgba(223, 113, 255, 0) 100%
       ),
-      linear-gradient(0deg, #7a5af8, #7a5af8);
+      linear-gradient(0deg, #b7870f, #d3a51054);
     border-radius: var(--round);
     border: none;
     outline: none;
@@ -84,10 +88,10 @@ const StyledWrapper = styled.div`
     --space: 2px;
     background: radial-gradient(
         65.28% 65.28% at 50% 100%,
-        rgba(223, 113, 255, 0.8) 0%,
+        #d3a410 0%,
         rgba(223, 113, 255, 0) 100%
       ),
-      linear-gradient(0deg, #7a5af8, #7a5af8);
+      linear-gradient(0deg, #d3a51054, #d3a51054);
   }
   .button:active {
     transform: scale(0.95);
@@ -104,7 +108,7 @@ const StyledWrapper = styled.div`
     transition: all 0.5s ease-in-out;
     background: radial-gradient(
       100% 75% at 55%,
-      rgba(223, 113, 255, 0.8) 0%,
+      #d3a51054 0%,
       rgba(223, 113, 255, 0) 100%
     );
     box-shadow: 0 0 3px black;
@@ -121,6 +125,10 @@ const StyledWrapper = styled.div`
     transform: rotate(45deg) translateX(0%) translateY(-18px);
     background-color: #e8e8e8;
     pointer-events: none;
+  }&:dark{
+    .fold::after {
+      background-color: #2c2c2c;
+    }
   }
   .button:hover .fold {
     margin-top: -1rem;

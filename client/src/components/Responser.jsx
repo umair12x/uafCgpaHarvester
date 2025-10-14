@@ -4,12 +4,15 @@ import TableComponent from "./partials/TableComponent";
 import StudentResultSearch from "./StudentSearchResult";
 import { useState } from "react";
 
-const Responser = () => {
+const Responser = ({ setAlertMessage }) => {
   const [studentRespone, setStudentResponse] = useState(null);
 
   return (
     <div className=" rounded-lg  mx-auto flex flex-col items-center  transition-colors duration-500  z-30 px-4">
-      <StudentResultSearch setStudentResponse={setStudentResponse} />
+      <StudentResultSearch
+        setStudentResponse={setStudentResponse}
+        setAlertMessage={setAlertMessage}
+      />
 
       <StudentInformation studentRespone={studentRespone} />
       <TableComponent studentRespone={studentRespone} />

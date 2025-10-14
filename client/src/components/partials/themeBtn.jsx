@@ -2,15 +2,14 @@ import React from "react";
 import styled from "styled-components";
 
 const Switch = ({ theme, setTheme }) => {
-  const handleToggle = () => {
-    setTheme(!theme); // Toggle the theme on each click
+  const toggletheme = () => {
+    setTheme(!theme);
   };
 
   return (
     <StyledWrapper>
       <label className="switch">
-        {/* Checkbox reflects theme state */}
-        <input type="checkbox" checked={theme} onChange={handleToggle} />
+        <input type="checkbox" onChange={toggletheme} />
         <span className="slider" />
       </label>
     </StyledWrapper>
@@ -20,14 +19,11 @@ const Switch = ({ theme, setTheme }) => {
 const StyledWrapper = styled.div`
   /* The switch - the box around the slider */
   .switch {
-    display: block;
-    --width-of-switch: 3.5em;
-    --height-of-switch: 2em;
-    --size-of-icon: 1.4em;
-    --slider-offset: 0.3em;
+    font-size: 17px;
     position: relative;
-    width: var(--width-of-switch);
-    height: var(--height-of-switch);
+    display: inline-block;
+    width: 3.5em;
+    height: 2em;
   }
 
   /* Hide default HTML checkbox */
@@ -45,7 +41,7 @@ const StyledWrapper = styled.div`
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #f4f4f5;
+    background-color: #fff;
     transition: 0.4s;
     border-radius: 30px;
   }
@@ -53,26 +49,31 @@ const StyledWrapper = styled.div`
   .slider:before {
     position: absolute;
     content: "";
-    height: var(--size-of-icon, 1.4em);
-    width: var(--size-of-icon, 1.4em);
+    height: 1.4em;
+    width: 1.4em;
     border-radius: 20px;
-    left: var(--slider-offset, 0.3em);
-    top: 50%;
-    transform: translateY(-50%);
-    background: linear-gradient(40deg, #ff0080, #ff8c00 70%);
+    left: 0.3em;
+    bottom: 0.3em;
+    background-color: #ffa500;
     transition: 0.4s;
   }
 
-  input:checked + .slider {
-    background-color: #303136;
+  .switch input:checked + .slider:before {
+    background-color: black;
+    border-radius: 50px;
+    box-shadow: inset 9px 0px 1px 0px white;
   }
 
-  input:checked + .slider:before {
-    left: calc(
-      100% - (var(--size-of-icon, 1.4em) + var(--slider-offset, 0.3em))
-    );
-    background: #303136;
-    box-shadow: inset -3px -2px 5px -2px #8983f7, inset -10px -4px 0 0 #a3dafb;
+  .switch input:checked + .slider {
+    background-color: black;
+  }
+
+  .switch input:focus + .slider {
+    box-shadow: 0 0 1px #black;
+  }
+
+  .switch input:checked + .slider:before {
+    transform: translateX(1.5em);
   }
 `;
 

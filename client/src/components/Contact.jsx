@@ -1,8 +1,6 @@
 import React from "react";
 import { CiMail } from "react-icons/ci";
 import { FaWhatsapp } from "react-icons/fa";
-import { BsArrowRightShort } from "react-icons/bs";
-import { TbSend } from "react-icons/tb";
 import MagicButton from "./partials/MagicButton";
 
 const Contact = () => {
