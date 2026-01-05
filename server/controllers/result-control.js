@@ -15,8 +15,6 @@ const resultHandler = async (req, res) => {
       });
     }
 
-    console.log(`🔍 Fetching result for ${regNo}...`);
-
     const data = await scraper(regNo.trim());
 
     if (!data || data.success === false) {
@@ -27,7 +25,7 @@ const resultHandler = async (req, res) => {
       });
     }
 
-    // Send clean and readable response
+   
     return res.status(200).json({
       type: "success",
       message: data.message,

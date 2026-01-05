@@ -7,9 +7,9 @@ const app = express();
 const port = process.env.PORT || 5000;
 const router = require("./routes/result-route.js");
 
-// ✅ Fixed CORS options
+
 const corsOptions = {
-  origin: "http://localhost:5173", // Removed trailing slash
+  origin: "http://localhost:5173", 
   methods: "GET,POST,PUT,PATCH,HEAD",
   credentials: true, 
 };

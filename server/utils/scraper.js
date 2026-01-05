@@ -9,12 +9,14 @@ const scraper = async (regNo) => {
     const page = await context.newPage();
     await page.setDefaultTimeout(7000);
 
-    // Navigate
     try {
       await page.goto(process.env.LOGIN_URL, { waitUntil: "domcontentloaded" });
     } catch (err) {
       if (err.message.includes("ERR_CERT"))
-        throw { type: "error", message: "SSL issue detected, website certificate invalid" };
+        throw {
+          type: "error",
+          message: "SSL issue detected, website certificate invalid",
+        };
       if (err.message.includes("Timeout"))
         throw { type: "warning", message: "Website took too long to respond" };
       throw { type: "error", message: "Unable to reach university website" };
@@ -26,67 +28,78 @@ const scraper = async (regNo) => {
 
     const hasTable = await page.$(".table.tab-content");
     if (!hasTable) {
-      throw { type: "error", message: "No result found for this registration number" };
+      throw {
+        type: "error",
+        message: "No result found for this registration number",
+      };
     }
 
     const rawInfo = await page.textContent(".table.tab-content");
     const cleanedInfo = rawInfo.replace(/\s+/g, " ").trim();
 
-    const match = cleanedInfo.match(/Registration #\s*([^\s]+).*?Student Full Name\s*(.*)/i);
+    const match = cleanedInfo.match(
+      /Registration #\s*([^\s]+).*?Student Full Name\s*(.*)/i
+    );
     const registrationNo = match ? match[1]?.trim() : "";
     const studentName = match ? match[2]?.trim() : "";
 
     if (!studentName) {
-      throw { type: "warning", message: "Invalid registration number, student not found" };
+      throw {
+        type: "warning",
+        message: "Invalid registration number, student not found",
+      };
     }
 
-    const { Cgpa, result } = await page.$$eval(".table.tab-content tr", (rows) => {
-      const allCourses = {};
+    const { Cgpa, result } = await page.$$eval(
+      ".table.tab-content tr",
+      (rows) => {
+        const allCourses = {};
 
-      const getQualityPoint = (obt, ch) => {
-        if (ch <= 0) return 0;
-        const total = ch * 20;
-        const pct = (obt / total) * 100;
-        if (pct < 40) return 0;
-        if (pct < 50) return 1 + (pct - 40) * 0.1;
-        if (pct < 80) return 2 + (pct - 50) * (2 / 30);
-        return 4;
-      };
+        const getQualityPoint = (obt, ch) => {
+          if (ch <= 0) return 0;
+          const total = ch * 20;
+          const pct = (obt / total) * 100;
+          if (pct < 40) return 0;
+          if (pct < 50) return 1 + (pct - 40) * 0.1;
+          if (pct < 80) return 2 + (pct - 50) * (2 / 30);
+          return 4;
+        };
 
-      rows.slice(1).forEach((r) => {
-        const td = r.querySelectorAll("td");
-        if (td.length > 11) {
-          const sem = td[1].innerText.trim();
-          const code = td[3].innerText.trim();
-          const ch = parseInt(td[5].innerText.trim()) || 0;
-          const marks = parseInt(td[10].innerText.trim()) || 0;
-          const grade = td[11].innerText.trim();
-          if (grade === "P") return;
-          const qp = getQualityPoint(marks, ch) * ch;
-          if (!allCourses[code] || marks > allCourses[code].marks)
-            allCourses[code] = { sem, code, ch, marks, grade, qp };
-        }
-      });
+        rows.slice(1).forEach((r) => {
+          const td = r.querySelectorAll("td");
+          if (td.length > 11) {
+            const sem = td[1].innerText.trim();
+            const code = td[3].innerText.trim();
+            const ch = parseInt(td[5].innerText.trim()) || 0;
+            const marks = parseInt(td[10].innerText.trim()) || 0;
+            const grade = td[11].innerText.trim();
+            if (grade === "P") return;
+            const qp = getQualityPoint(marks, ch) * ch;
+            if (!allCourses[code] || marks > allCourses[code].marks)
+              allCourses[code] = { sem, code, ch, marks, grade, qp };
+          }
+        });
 
-      const semMap = {};
-      Object.values(allCourses).forEach((c) => {
-        if (!semMap[c.sem]) semMap[c.sem] = [];
-        semMap[c.sem].push(c);
-      });
+        const semMap = {};
+        Object.values(allCourses).forEach((c) => {
+          if (!semMap[c.sem]) semMap[c.sem] = [];
+          semMap[c.sem].push(c);
+        });
 
-      const result = Object.entries(semMap).map(([sem, subs]) => {
-        const totalQP = subs.reduce((a, b) => a + b.qp, 0);
-        const totalCH = subs.reduce((a, b) => a + b.ch, 0);
-        const gpa = totalCH ? Number((totalQP / totalCH).toFixed(3)) : 0;
-        return { semester: sem, Gpa: gpa, subjects: subs };
-      });
+        const result = Object.entries(semMap).map(([sem, subs]) => {
+          const totalQP = subs.reduce((a, b) => a + b.qp, 0);
+          const totalCH = subs.reduce((a, b) => a + b.ch, 0);
+          const gpa = totalCH ? Number((totalQP / totalCH).toFixed(3)) : 0;
+          return { semester: sem, Gpa: gpa, subjects: subs };
+        });
 
-      const totalQP = Object.values(allCourses).reduce((a, c) => a + c.qp, 0);
-      const totalCH = Object.values(allCourses).reduce((a, c) => a + c.ch, 0);
-      const cgpa = totalCH ? Number((totalQP / totalCH).toFixed(5)) : 0;
+        const totalQP = Object.values(allCourses).reduce((a, c) => a + c.qp, 0);
+        const totalCH = Object.values(allCourses).reduce((a, c) => a + c.ch, 0);
+        const cgpa = totalCH ? Number((totalQP / totalCH).toFixed(5)) : 0;
 
-      return { Cgpa: cgpa, result };
-    });
+        return { Cgpa: cgpa, result };
+      }
+    );
 
     return {
       success: true,

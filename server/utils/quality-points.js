@@ -25,4 +25,3 @@ const getQualityPoint = (obtainedMarks, creditHours) => {
   return Number(totalQP.toFixed(2));
 };
 
-console.log(getQualityPoint(58,4))
