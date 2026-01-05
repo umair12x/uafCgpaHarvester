@@ -1,7 +1,8 @@
 import React from "react";
 import { CiMail } from "react-icons/ci";
 import { FaWhatsapp } from "react-icons/fa";
-import MagicButton from "./partials/MagicButton";
+import Button from "./partials/Button";
+import { FiSend } from "react-icons/fi";
 
 const Contact = () => {
   return (
@@ -67,9 +68,7 @@ const Contact = () => {
                   />
                 </div>
                 <div className="my-2">
-                  <button className="primary-btn px-5  flex flex-row gap-1">
-                    <MagicButton text={"Send Message"} />
-                  </button>
+                  <Button text={<FiSend className="icon" />} />
                 </div>
               </form>
             </div>

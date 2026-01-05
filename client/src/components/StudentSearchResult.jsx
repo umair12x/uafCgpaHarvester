@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { FaIdCardClip } from "react-icons/fa6";
 import Input from "./partials/Input";
-import MagicButton from "./partials/MagicButton";
 import { motion } from "framer-motion";
 import Loader from "./partials/Loader";
+import Button from "./partials/Button";
+import { FaCalculator } from "react-icons/fa";
 
 const StudentResultSearch = ({ setStudentResponse, setAlertMessage }) => {
   const [regNo, setregNo] = useState("");
@@ -34,7 +35,7 @@ const StudentResultSearch = ({ setStudentResponse, setAlertMessage }) => {
       });
 
       const data = await response.json();
-      console.log("Response:", data);
+      // console.log("Response:", data);
       setStudentResponse(data);
       setAlertMessage({
         type: data.type,
@@ -64,34 +65,39 @@ const StudentResultSearch = ({ setStudentResponse, setAlertMessage }) => {
       <hr className="border-gray-300 my-5 dark:border-gray-600" />
 
       <form onSubmit={handleSubmit}>
-  <label
-    htmlFor="register"
-    className="flex secondary-text items-center gap-1 font-medium mb-3"
-  >
-    <FaIdCardClip />
-    Register:
-  </label>
+        <label
+          htmlFor="register"
+          className="flex secondary-text flex-col gap-1 font-medium mb-3"
+        >
+          <p className="flex items-center gap-1">
+            <FaIdCardClip /> Register:
+          </p>
+        </label>
 
-  <div className="mb-4 gap-0.5 md:gap-2 flex items-center">
-    {/* Disable input when loading */}
-    <Input value={regNo} setregNo={setregNo} disabled={loading} />
+        <div className="mb-4 gap-0.5 md:gap-2 min-h-[40px] flex items-center justify-center">
+          <Input value={regNo} setregNo={setregNo} disabled={loading} />
 
-    {/* MagicButton directly handles button logic */}
-    {loading ? (
-      <div className="min-h-[40px] min-w-[40px] max-h-[50px] flex items-center justify-center">
-        &nbsp;
-      </div>
-    ) : (
-      <MagicButton disabled={loading} text="Calc..." />
-    )}
-  </div>
+          {loading ? (
+            <div className="min-h-[40px] min-w-[40px] max-h-[50px] flex items-center justify-center">
+              &nbsp;
+            </div>
+          ) : (
+            <Button
+              disabled={loading}
+              text={<FaCalculator className="icon" />}
+            />
+          )}
+        </div>
+        <div className="mt-1 text-[11px] text-center text-gray-500 dark:text-slate-400">
+          Format: 4-digit year - ag - digit number
+        </div>
+        {loading && (
+          <div className="flex m-5 p-10 items-center justify-center">
+            <Loader />
+          </div>
+        )}
 
-  {loading && (
-    <div className="flex m-5 p-10 items-center justify-center">
-      <Loader />
-    </div>
-  )}
-</form>
+      </form>
     </motion.div>
   );
 };

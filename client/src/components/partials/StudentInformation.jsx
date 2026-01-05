@@ -2,7 +2,6 @@ import React from "react";
 import { FaIdCardAlt } from "react-icons/fa";
 import { FaUserGraduate } from "react-icons/fa";
 import { FaAward } from "react-icons/fa";
-import { NumberTicker } from "./NumberTicker";
 
 const StudentInformation = ({ studentRespone }) => {
   return (
@@ -51,11 +50,15 @@ const StudentInformation = ({ studentRespone }) => {
               <p className="font-medium text-sm text-gray-700 dark:text-gray-300">
                 Overall CGPA:
               </p>
-              <NumberTicker
-                value={studentRespone.Cgpa}
-                decimalPlaces={3}
-                className="whitespace-pre-wrap flex font-bold tracking-tighter text-gray-800 dark:text-white text-base"
-              />
+              {studentRespone.Cgpa !== "N/A" ? (
+                <p className="text-gray-800 dark:text-gray-200 text-base font-semibold">
+                  {parseFloat(studentRespone.Cgpa).toFixed(3)}
+                </p>
+              ) : (
+                <p className="text-gray-800 dark:text-gray-200 text-base font-semibold">
+                  ) {studentRespone.Cgpa}
+                </p>
+              )}
             </div>
           </div>
         </div>

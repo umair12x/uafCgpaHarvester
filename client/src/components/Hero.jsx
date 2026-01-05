@@ -3,21 +3,25 @@ import Logo from "./partials/Logo";
 
 const Hero = () => {
   return (
-    <div>
-      <div className="py-30 sm:py-34 gap-5 flex flex-col max-w-full  drop-shadow-lg justify-center items-center ">
-        <Logo />
-        <span className="text-custom"></span>
-        <h2 className="font-bold md:text-5xl lg:text-6xl text-center text-3xl mx-5 text-vibrant">
-          CGPA Harvester for
+    <section className="w-full flex justify-center items-center px-4">
+      <div className="flex flex-col items-center text-center gap-4 sm:gap-5 md:gap-6 py-14 sm:py-16 md:py-20 max-w-4xl">
+        <div className="scale-90 sm:scale-100">
+          <Logo />
+        </div>
+
+        <h2 className="font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight text-vibrant">
+          CGPA Calculator for
           <br />
-          Unversity of Agriculture,
-          <br /> Faisalabad
+          University of Agriculture,
+          <br />
+          Faisalabad
         </h2>
-        <p className="font-thin md:text-lg text-sm secondary-text  drop-shadow-lg  opacity-75">
+
+        <p className="font-light text-sm sm:text-base md:text-lg secondary-text opacity-80">
           Get your best results
         </p>
       </div>
-    </div>
+    </section>
   );
 };
 

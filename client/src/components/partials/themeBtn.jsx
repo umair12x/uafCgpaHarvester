@@ -25,6 +25,7 @@ const StyledWrapper = styled.div`
     width: 3.5em;
     height: 2em;
   }
+    
 
   /* Hide default HTML checkbox */
   .switch input {
