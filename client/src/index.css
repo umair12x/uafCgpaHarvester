@@ -18,93 +18,259 @@
 
   --heading-bg-color: #d1b54a;
   --heading-color: #9f1d1d;
+
+  --text-light: #0a7273;
+  --text-light2: #033043;
 }
 
 /* =====================
-   Text Utilities
+   Text Gradient Classes (Keep as requested)
    ===================== */
-.text-custom {
-  @apply transition-colors font-[Nunito] font-semibold drop-shadow-sm;
-  background: linear-gradient(to right, #374151, #1e3a8a, #2563eb);
+.Main-Heading-Style {
+  @apply font-bold tracking-wide bg-clip-text transition-all duration-700;
+}
+
+/* Light mode gradient */
+.Main-Heading-Style:not(.dark *) {
+  background-image: linear-gradient(to right, var(--cgpa-light-text), var(--text-light), var(--text-light2));
+  color: transparent;
+}
+
+/* Dark mode gradient */
+.dark .Main-Heading-Style {
+  background-image: linear-gradient(to right, var(--cgpa-dark-text), #9f8a2a, #374151);
+  color: transparent;
+}
+
+.Inner-Heading-Style {
+  @apply font-bold text-4xl;
+}
+
+/* Light mode inner heading */
+.Inner-Heading-Style:not(.dark *) {
+  color: var(--cgpa-light-text);
+}
+
+/* Dark mode inner heading */
+.dark .Inner-Heading-Style {
+  color: var(--cgpa-dark-text);
+}
+
+.text-style {
+  @apply text-gray-600 dark:text-gray-100;
+}
+
+/* =====================
+   New Classes for CGPA Calculator
+   ===================== */
+
+/* GPA Scale Indicators */
+.gpa-excellent {
+  @apply text-green-600 dark:text-green-400 font-semibold;
+}
+
+.gpa-good {
+  @apply text-blue-600 dark:text-blue-400 font-semibold;
+}
+
+.gpa-average {
+  @apply text-yellow-600 dark:text-yellow-400 font-semibold;
+}
+
+.gpa-poor {
+  @apply text-red-600 dark:text-red-400 font-semibold;
+}
+
+/* Calculator Specific */
+.cgpa-display {
+  @apply text-5xl md:text-6xl font-bold tracking-tight;
+}
+
+.cgpa-display:not(.dark *) {
+  background-image: linear-gradient(to right, var(--cgpa-light-text), var(--text-light));
+  color: transparent;
   background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent !important;
+}
+
+.dark .cgpa-display {
+  background-image: linear-gradient(to right, var(--cgpa-dark-text), #3b82f6);
+  color: transparent;
+  background-clip: text;
+}
+
+.grade-point {
+  @apply text-lg font-medium px-3 py-1 rounded-full border;
+}
+
+.grade-point:not(.dark *) {
+  @apply bg-blue-50 text-blue-700 border-blue-200;
+}
+
+.dark .grade-point {
+  @apply bg-blue-900/30 text-blue-300 border-blue-700/50;
+}
+
+/* Form Elements */
+.cgpa-input {
+  @apply w-full px-4 py-3 rounded-lg border focus:ring-2 focus:outline-none transition-all;
+}
+
+.cgpa-input:not(.dark *) {
+  @apply border-gray-300 bg-white focus:border-blue-500 focus:ring-blue-200 text-gray-800;
+}
+
+.dark .cgpa-input {
+  @apply border-gray-600 bg-gray-800 focus:border-blue-400 focus:ring-blue-900/30 text-gray-100;
+}
+
+.cgpa-label {
+  @apply block text-sm font-medium mb-2;
+}
+
+.cgpa-label:not(.dark *) {
+  @apply text-gray-700;
+}
+
+.dark .cgpa-label {
+  @apply text-gray-300;
+}
+
+/* Buttons */
+.cgpa-btn-primary {
+  @apply px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98];
+}
+
+.cgpa-btn-primary:not(.dark *) {
+  @apply bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 shadow-lg hover:shadow-xl;
+}
+
+.dark .cgpa-btn-primary {
+  @apply bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700 shadow-lg hover:shadow-xl;
+}
+
+.cgpa-btn-secondary {
+  @apply px-6 py-3 rounded-lg font-medium border transition-all duration-300;
+}
+
+.cgpa-btn-secondary:not(.dark *) {
+  @apply border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400;
+}
+
+.dark .cgpa-btn-secondary {
+  @apply border-gray-600 text-gray-300 hover:bg-gray-800 hover:border-gray-500;
+}
+
+/* Cards and Containers */
+.cgpa-card {
+  @apply rounded-xl shadow-md p-6 transition-all duration-300;
+}
+
+.cgpa-card:not(.dark *) {
+  @apply bg-white border border-gray-200 hover:shadow-lg;
+}
+
+.dark .cgpa-card {
+  @apply bg-gray-800 border border-gray-700 hover:shadow-lg hover:border-gray-600;
+}
+
+.cgpa-container {
+  @apply max-w-6xl mx-auto px-4 md:px-8;
+}
+
+/* Results Display */
+.result-success {
+  @apply text-green-700 dark:text-green-400 font-bold;
+}
+
+.result-warning {
+  @apply text-yellow-700 dark:text-yellow-400 font-bold;
+}
+
+.result-error {
+  @apply text-red-700 dark:text-red-400 font-bold;
+}
+
+/* Subject/Course Items */
+.course-item {
+  @apply flex items-center justify-between p-4 rounded-lg mb-3 transition-all hover:translate-x-1;
+}
+
+.course-item:not(.dark *) {
+  @apply bg-gray-50 border border-gray-200 hover:bg-gray-100;
+}
+
+.dark .course-item {
+  @apply bg-gray-800/50 border border-gray-700 hover:bg-gray-800;
+}
+
+/* Statistics & Charts */
+.gpa-stat {
+  @apply text-center p-4 rounded-lg;
+}
+
+.gpa-stat:not(.dark *) {
+  @apply bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100;
+}
+
+.dark .gpa-stat {
+  @apply bg-gradient-to-br from-blue-900/20 to-indigo-900/20 border border-blue-800/30;
+}
+
+/* Progress Indicators */
+.gpa-progress {
+  @apply h-2 rounded-full overflow-hidden;
+}
+
+.gpa-progress-bar {
+  @apply h-full rounded-full transition-all duration-500;
+}
+
+.gpa-progress-bar:not(.dark *) {
+  background: linear-gradient(90deg, var(--text-light), var(--cgpa-light-text));
+}
+
+.dark .gpa-progress-bar {
+  background: linear-gradient(90deg, var(--cgpa-dark-text), var(--dark-logo));
+}
+
+/* Academic-specific */
+.credit-hours {
+  @apply inline-flex items-center justify-center w-8 h-8 rounded-full font-bold;
+}
+
+.credit-hours:not(.dark *) {
+  @apply bg-blue-100 text-blue-700;
+}
+
+.dark .credit-hours {
+  @apply bg-blue-900/40 text-blue-300;
+}
+
+.semester-tag {
+  @apply inline-block px-3 py-1 rounded-full text-sm font-medium;
+}
+
+.semester-tag:not(.dark *) {
+  @apply bg-purple-100 text-purple-700;
+}
+
+.dark .semester-tag {
+  @apply bg-purple-900/30 text-purple-300;
+}
+
+/* Utility Classes */
+.text-vibrant {
+  color: var(--custom-light-text);
+}
+
+.dark .text-vibrant {
+  color: var(--custom-dark-text);
 }
 
 .secondary-text {
   @apply text-gray-600 dark:text-gray-400;
 }
 
-/* =====================
-   Layout Containers
-   ===================== */
-.primary-boxes {
-  @apply bg-gray-50 dark:bg-gray-900 
-  border border-gray-200 dark:border-gray-700
-  text-gray-700 dark:text-gray-300 
-  rounded-lg shadow-sm;
-}
-
-/* =====================
-   Headings
-   ===================== */
-.semester-heading {
-  @apply font-[Nunito] text-lg font-bold tracking-wide drop-shadow-sm;
-  color: var(--heading-color);
-}
-
-.dark .semester-heading {
-  color: var(--heading-bg-color);
-}
-
-/* =====================
-   Tables
-   ===================== */
-.table-header {
-  @apply bg-[var(--heading-bg-color)] 
-  text-gray-900 font-semibold 
-  px-4 py-2 rounded-md shadow-sm;
-}
-
-/* =====================
-   Gradient Text Styles
-   ===================== */
-.text-main {
-  @apply relative font-medium tracking-wide text-transparent 
-  transition-all duration-500 bg-clip-text drop-shadow-sm;
-  background-image: linear-gradient(
-    to right,
-    #0f172a,
-    #1e40af,
-    #2563eb
-  );
-}
-
-.text-vibrant {
-  @apply relative font-semibold tracking-wide text-transparent 
-  bg-clip-text transition-all duration-700 drop-shadow-sm;
-  background-image: linear-gradient(
-    to right,
-    #1f2933,
-    #9f8a2a,
-    #374151
-  );
-  background-size: 200% auto;
-  animation: shine-move 6s ease-in-out infinite;
-}
-
-.dark .text-vibrant {
-  background-image: linear-gradient(
-    to right,
-    #1e3a8a,
-    #d1b54a,
-    #4c1d95
-  );
-}
-
-/* =====================
-   Animations
-   ===================== */
 @keyframes shine-move {
   0% {
     background-position: 0% 50%;
@@ -115,4 +281,20 @@
   100% {
     background-position: 0% 50%;
   }
+}
+
+/* Animation for GPA calculation */
+@keyframes calculate-gpa {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.calculate-animation {
+  animation: calculate-gpa 0.5s ease-out;
 }

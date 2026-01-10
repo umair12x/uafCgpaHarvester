@@ -7,7 +7,7 @@ const MyFooter = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="my-footer w-full flex flex-col items-center py-8 shadow-lg primary-boxes border-t dark:border-gray-700 transition-all duration-300">
+    <footer className="my-footer w-full flex flex-col items-center py-8 shadow-lg border-t transition-all duration-300">
       {/* Main Footer Content */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl px-6 items-center">
         {/* About Section */}
@@ -78,7 +78,7 @@ const MyFooter = () => {
 
       {/* Footer Bottom */}
       <div className="flex flex-col items-center gap-2">
-        <p className="text-gray-700 dark:text-gray-300 text-sm md:text-base font-medium">
+        <p className="secondary-text text-sm md:text-base font-medium">
           © {currentYear} All Rights Reserved
         </p>
         <p className="text-xs opacity-60 secondary-text">

@@ -8,7 +8,7 @@ const Responser = ({ setAlertMessage }) => {
   const [studentRespone, setStudentResponse] = useState(null);
 
   return (
-    <div className=" rounded-lg  mx-auto flex flex-col items-center  transition-colors duration-500  z-30 px-4">
+    <div className="rounded-lg mx-auto flex flex-col items-center transition-colors duration-500 z-30 px-4 cgpa-container">
       <StudentResultSearch
         setStudentResponse={setStudentResponse}
         setAlertMessage={setAlertMessage}

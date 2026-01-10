@@ -1,13 +1,41 @@
 require("dotenv").config();
-const { webkit } = require("playwright");
+const { firefox } = require("playwright");
 
 const scraper = async (regNo) => {
   let browser;
   try {
-    browser = await webkit.launch({ headless: true, args: ["--no-sandbox"] });
+    browser = await firefox.launch({ headless: true, args: ["--no-sandbox"] });
     const context = await browser.newContext({ ignoreHTTPSErrors: true });
     const page = await context.newPage();
-    await page.setDefaultTimeout(7000);
+    await page.setDefaultTimeout(10000);
+    await page.route("**/*", (route) => {
+      const req = route.request();
+      const url = req.url();
+      const resource = req.resourceType();
+
+      if (
+        resource === "image" ||
+        resource === "media" ||
+        resource === "font" ||
+        url.includes("analytics") ||
+        url.includes("ads") ||
+        url.includes("tracker") ||
+        url.includes(".css") ||
+        url.includes(".svg") ||
+        url.includes(".woff") ||
+        url.includes(".woff2") ||
+        url.includes(".eot") ||
+        url.includes(".ttf") ||
+        url.includes(".mp4") ||
+        url.includes(".webm") ||
+        url.includes(".m3u8") ||
+        url.includes(".json")
+      ) {
+        return route.abort();
+      }
+
+      route.continue();
+    });
 
     try {
       await page.goto(process.env.LOGIN_URL, { waitUntil: "domcontentloaded" });

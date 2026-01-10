@@ -16,7 +16,7 @@ const NavBar = () => {
     }
   }, [theme]); 
   return (
-    <header className="flex w-full bg-gray-50 dark:bg-gradient-to-r from-gray-900 via-gray-800 to-black justify-between items-center p-0 h-12 shadow-md">
+    <header className="flex w-full justify-between items-center p-0 h-12 shadow-md">
       <nav className="left-nav flex sm:text-lg md:text-1xl lg:text-2xl pl-5 gap-x-2.5 items-center">
         <a className="relative w-10 cursor-progress h-12">
          <img src="../../logo_icon.png" alt="logo" />
