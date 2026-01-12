@@ -6,14 +6,14 @@ import {
   Route,
   useLocation,
 } from "react-router-dom";
-import NavBar from "./components/Navbar";
-import MyFooter from "./components/MyFooter";
-import Responser from "./components/Responser";
-import UseAccordian from "./components/UseAccordian";
-import Hero from "./components/Hero";
-import Contact from "./components/Contact";
-import About from "./components/About";
-import { Alert } from "./components/partials/Alert";
+import NavBar from "./components/Navbar.jsx";
+import MyFooter from "./components/MyFooter.jsx";
+import Responser from "./components/Responser.jsx";
+import UseAccordian from "./components/UseAccordian.jsx";
+import Hero from "./components/Hero.jsx";
+import Contact from "./components/Contact.jsx";
+import About from "./components/About.jsx";
+import { Alert } from "./components/partials/Alert.jsx";
 
 // Wrapper component to handle section routing
 const SectionRouter = ({ setAlertMessage }) => {
