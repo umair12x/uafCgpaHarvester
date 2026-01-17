@@ -10,6 +10,7 @@ import {
   FaStar,
 } from "react-icons/fa";
 import { HiOutlineSparkles } from "react-icons/hi";
+import { MdTouchApp } from "react-icons/md";
 
 const About = () => {
   const [activeCard, setActiveCard] = useState(null);
@@ -31,6 +32,20 @@ const About = () => {
     },
     {
       id: 2,
+      name: "Manual Input",
+      icon: <MdTouchApp />,
+      description:
+        "Prefer to enter your grades yourself? Our manual calculator lets you input your subjects and grades with ease.",
+      color: "from-red-500 to-pink-500",
+      iconColor: "text-red-600 dark:text-red-400",
+      bgColor: "bg-red-50 dark:bg-red-900/20",
+      borderColor: "border-red-100 dark:border-red-800/30",
+      longDescription:
+        "Full control over your data entry with our user-friendly manual calculator.",
+      stats: "Everything manual",
+    },
+    {
+      id: 3,
       name: "Analytics",
       icon: <FaGraduationCap />,
       description:
@@ -44,7 +59,7 @@ const About = () => {
       stats: "360° analysis",
     },
     {
-      id: 3,
+      id: 4,
       name: "Calculations",
       icon: <FaCalculator />,
       description:
@@ -58,7 +73,7 @@ const About = () => {
       stats: "90%+ accuracy",
     },
     {
-      id: 4,
+      id: 5,
       name: "Real-time Insights",
       icon: <FaChartBar />,
       description:
@@ -72,7 +87,7 @@ const About = () => {
       stats: "updates",
     },
     {
-      id: 5,
+      id: 6,
       name: "24/7 Support System",
       icon: <FaHeadset />,
       description:

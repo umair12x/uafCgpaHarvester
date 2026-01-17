@@ -166,11 +166,11 @@ const UseAccordian = () => {
     {
       id: "item-3",
       question: "How accurate are the results?",
-      answer: "The calculations follow UAF's official grading formulas and policies, ensuring precision and reliability. Our algorithms account for grade replacements, credit hour variations, and university-specific rules. Results match official university calculations with 99.9% accuracy.",
+      answer: "The calculations follow UAF's official grading formulas and policies, ensuring precision and reliability. Our algorithms account for grade replacements, credit hour variations, and university-specific rules. Results match official university calculations with 95% accuracy.",
       icon: <TrendingUp className="w-5 h-5 text-purple-600 dark:text-purple-400" />,
       tags: ["Accuracy", "Reliability"],
       note: "Always verify critical calculations with official university records.",
-      stats: "99.9% accuracy rate"
+      stats: "95% accuracy rate"
     },
     {
       id: "item-4",
@@ -365,37 +365,7 @@ const UseAccordian = () => {
           </div>
         </motion.div>
 
-        {/* Stats */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-          className="mt-10 sm:mt-12"
-        >
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-            {[
-              { label: "Active Users", value: "5K+", icon: <Users /> },
-              { label: "Accuracy", value: "99.9%", icon: <CheckCircle /> },
-              { label: "Response Time", value: "< 24h", icon: <Zap /> },
-              { label: "Satisfaction", value: "4.9★", icon: <Star /> }
-            ].map((stat, idx) => (
-              <div
-                key={idx}
-                className="p-4 bg-white/50 dark:bg-gray-800/30 backdrop-blur-sm rounded-xl border border-gray-200/50 dark:border-gray-700/50"
-              >
-                <div className="text-emerald-600 dark:text-emerald-400 mb-2 flex justify-center">
-                  {stat.icon}
-                </div>
-                <div className="text-xl font-bold text-gray-800 dark:text-gray-200 mb-1">
-                  {stat.value}
-                </div>
-                <div className="text-xs text-gray-500 dark:text-gray-400">
-                  {stat.label}
-                </div>
-              </div>
-            ))}
-          </div>
-        </motion.div>
+      
       </div>
     </section>
   );

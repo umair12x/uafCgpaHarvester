@@ -9,9 +9,11 @@ import {
   Calculator,
   Info,
   MessageSquare,
+ 
   Sparkles,
   ChevronDown,
 } from "lucide-react";
+import { FaGraduationCap } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const NavBar = () => {
@@ -50,6 +52,7 @@ const NavBar = () => {
       const sections = [
         "home",
         "calculator",
+        "gradulator",
         "results",
         "about",
         "faq",
@@ -123,7 +126,13 @@ const NavBar = () => {
       path: "/#calculator",
       hash: "#calculator",
     },
-
+    {
+      id: "gradulator",
+      label: "Gradulator",
+      icon: <FaGraduationCap className="w-4 h-4" />,
+      path: "/#gradulator",
+      hash: "#gradulator",
+    },
     {
       id: "about",
       label: "About",
@@ -193,7 +202,7 @@ const NavBar = () => {
                 </div>
                 <div className="hidden sm:block">
                   <span className="text-lg font-bold bg-gradient-to-r from-emerald-600 to-cyan-600 bg-clip-text text-transparent">
-                    CGPA Calculator
+                    CGPA Harvester
                   </span>
                   <p className="text-xs text-gray-500 dark:text-gray-400 -mt-1">
                     Academic Excellence Simplified

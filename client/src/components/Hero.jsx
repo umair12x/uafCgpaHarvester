@@ -3,7 +3,7 @@ import Logo from "./partials/Logo";
 import { motion } from "framer-motion";
 const Hero = () => {
   return (
-    <section className="relative w-full min-h-screen flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <section className="relative w-full min-h-screen flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 overflow-hidden ">
       {/* Animated background elements */}
       <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 via-cyan-50 to-sky-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 z-0">
         {/* Decorative elements */}
@@ -29,7 +29,7 @@ const Hero = () => {
         >
           <h1 className="font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl leading-tight tracking-tight">
             <span className="block bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 via-cyan-600 to-sky-600 dark:from-emerald-400 dark:via-cyan-300 dark:to-sky-400">
-              CGPA Calculator
+              CGPA Harvester & Calculator
             </span>
             <span className="block text-gray-800 dark:text-gray-200 mt-2 sm:mt-2 text-2xl sm:text-3xl md:text-4xl lg:text-5xl">
               University of Agriculture,
