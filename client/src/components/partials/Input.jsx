@@ -4,8 +4,8 @@ import { FaRegCopy, FaCheck } from "react-icons/fa6";
 
 const Input = ({ value, setregNo, disabled, onFocus, onBlur }) => {
   const [theme, setTheme] = useState("light");
-  const [isfocused, setIsfocused] = useState('false');
-  const [copied, setCopied] = useState('false');
+  const [isFocused, setIsFocused] = useState(false);
+  const [copied, setCopied] = useState(false);
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -54,12 +54,12 @@ const Input = ({ value, setregNo, disabled, onFocus, onBlur }) => {
   };
 
   const handleFocus = () => {
-    setIsfocused(true);
+    setIsFocused(true);
     onFocus?.();
   };
 
   const handleBlur = () => {
-    setIsfocused(false);
+    setIsFocused(false);
     onBlur?.();
   };
 
@@ -110,9 +110,15 @@ const Input = ({ value, setregNo, disabled, onFocus, onBlur }) => {
   };
 
   const isValidFormat = /^\d{4}-ag-\d{1,6}$/.test(value);
+  const hasValue = !!value;
 
   return (
-    <StyledWrapper theme={theme} isfocused={isfocused} isValid={isValidFormat} hasValue={!!value}>
+    <StyledWrapper 
+      $theme={theme} 
+      $isFocused={isFocused} 
+      $isValid={isValidFormat} 
+      $hasValue={hasValue}
+    >
       <div className="input-container">
         <div className="input-wrapper">
           <input
@@ -177,20 +183,20 @@ const StyledWrapper = styled.div`
 
   .input-wrapper {
     position: relative;
-    background: ${({ theme }) => theme === 'dark' ? 'rgba(30, 41, 59, 0.8)' : 'rgba(255, 255, 255, 0.8)'};
+    background: ${({ $theme }) => $theme === 'dark' ? 'rgba(30, 41, 59, 0.8)' : 'rgba(255, 255, 255, 0.8)'};
     border-radius: 16px;
     padding: 4px;
     backdrop-filter: blur(10px);
-    border: 1px solid ${({ theme, isfocused }) => 
-      isfocused 
-        ? (theme === 'dark' ? 'rgba(16, 185, 129, 0.6)' : 'rgba(16, 185, 129, 0.4)')
-        : (theme === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)')};
-    box-shadow: ${({ theme, isfocused }) => 
-      isfocused 
-        ? (theme === 'dark' 
+    border: 1px solid ${({ $theme, $isFocused }) => 
+      $isFocused 
+        ? ($theme === 'dark' ? 'rgba(16, 185, 129, 0.6)' : 'rgba(16, 185, 129, 0.4)')
+        : ($theme === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)')};
+    box-shadow: ${({ $theme, $isFocused }) => 
+      $isFocused 
+        ? ($theme === 'dark' 
             ? '0 0 0 1px rgba(16, 185, 129, 0.3), 0 8px 32px rgba(16, 185, 129, 0.1)' 
             : '0 0 0 1px rgba(16, 185, 129, 0.2), 0 8px 32px rgba(16, 185, 129, 0.08)')
-        : (theme === 'dark' 
+        : ($theme === 'dark' 
             ? '0 4px 24px rgba(0, 0, 0, 0.2)' 
             : '0 4px 24px rgba(0, 0, 0, 0.06)')};
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -204,7 +210,7 @@ const StyledWrapper = styled.div`
     outline: none;
     font-size: 18px;
     font-weight: 500;
-    color: ${({ theme }) => theme === 'dark' ? '#f1f5f9' : '#1e293b'};
+    color: ${({ $theme }) => $theme === 'dark' ? '#f1f5f9' : '#1e293b'};
     font-family: 'JetBrains Mono', 'SF Mono', Monaco, Consolas, monospace;
     letter-spacing: 1px;
     caret-color: #10b981;
@@ -238,33 +244,33 @@ const StyledWrapper = styled.div`
     transition: all 0.2s ease;
     
     &.year {
-      color: ${({ theme, hasValue }) => 
-        hasValue 
-          ? (theme === 'dark' ? '#34d399' : '#059669') 
-          : (theme === 'dark' ? '#64748b' : '#94a3b8')};
-      font-weight: ${({ hasValue }) => hasValue ? '600' : '400'};
-      background: ${({ theme, hasValue }) => 
-        hasValue 
-          ? (theme === 'dark' ? 'rgba(52, 211, 153, 0.1)' : 'rgba(5, 150, 105, 0.05)')
+      color: ${({ $theme, $hasValue }) => 
+        $hasValue 
+          ? ($theme === 'dark' ? '#34d399' : '#059669') 
+          : ($theme === 'dark' ? '#64748b' : '#94a3b8')};
+      font-weight: ${({ $hasValue }) => $hasValue ? '600' : '400'};
+      background: ${({ $theme, $hasValue }) => 
+        $hasValue 
+          ? ($theme === 'dark' ? 'rgba(52, 211, 153, 0.1)' : 'rgba(5, 150, 105, 0.05)')
           : 'transparent'};
     }
     
     &.ag {
-      color: ${({ theme }) => theme === 'dark' ? '#22d3ee' : '#0891b2'};
+      color: ${({ $theme }) => $theme === 'dark' ? '#22d3ee' : '#0891b2'};
       font-weight: 500;
-      background: ${({ theme }) => 
-        theme === 'dark' ? 'rgba(34, 211, 238, 0.1)' : 'rgba(8, 145, 178, 0.05)'};
+      background: ${({ $theme }) => 
+        $theme === 'dark' ? 'rgba(34, 211, 238, 0.1)' : 'rgba(8, 145, 178, 0.05)'};
     }
     
     &.number {
-      color: ${({ theme, hasValue }) => 
-        hasValue 
-          ? (theme === 'dark' ? '#60a5fa' : '#2563eb') 
-          : (theme === 'dark' ? '#64748b' : '#94a3b8')};
-      font-weight: ${({ hasValue }) => hasValue ? '600' : '400'};
-      background: ${({ theme, hasValue }) => 
-        hasValue 
-          ? (theme === 'dark' ? 'rgba(96, 165, 250, 0.1)' : 'rgba(37, 99, 235, 0.05)')
+      color: ${({ $theme, $hasValue }) => 
+        $hasValue 
+          ? ($theme === 'dark' ? '#60a5fa' : '#2563eb') 
+          : ($theme === 'dark' ? '#64748b' : '#94a3b8')};
+      font-weight: ${({ $hasValue }) => $hasValue ? '600' : '400'};
+      background: ${({ $theme, $hasValue }) => 
+        $hasValue 
+          ? ($theme === 'dark' ? 'rgba(96, 165, 250, 0.1)' : 'rgba(37, 99, 235, 0.05)')
           : 'transparent'};
     }
     
@@ -274,7 +280,7 @@ const StyledWrapper = styled.div`
   }
 
   .separator {
-    color: ${({ theme }) => theme === 'dark' ? '#94a3b8' : '#cbd5e1'};
+    color: ${({ $theme }) => $theme === 'dark' ? '#94a3b8' : '#cbd5e1'};
   }
 
   .copy-button {
@@ -282,11 +288,11 @@ const StyledWrapper = styled.div`
     right: 16px;
     top: 50%;
     transform: translateY(-50%);
-    background: ${({ theme }) => theme === 'dark' ? 'rgba(30, 41, 59, 0.8)' : 'rgba(255, 255, 255, 0.8)'};
-    border: 1px solid ${({ theme }) => theme === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'};
+    background: ${({ $theme }) => $theme === 'dark' ? 'rgba(30, 41, 59, 0.8)' : 'rgba(255, 255, 255, 0.8)'};
+    border: 1px solid ${({ $theme }) => $theme === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'};
     border-radius: 10px;
     padding: 8px;
-    color: ${({ theme }) => theme === 'dark' ? '#94a3b8' : '#64748b'};
+    color: ${({ $theme }) => $theme === 'dark' ? '#94a3b8' : '#64748b'};
     cursor: pointer;
     transition: all 0.2s ease;
     display: flex;
@@ -294,9 +300,9 @@ const StyledWrapper = styled.div`
     justify-content: center;
     
     &:hover {
-      background: ${({ theme }) => theme === 'dark' ? 'rgba(16, 185, 129, 0.1)' : 'rgba(16, 185, 129, 0.05)'};
-      color: ${({ theme }) => theme === 'dark' ? '#34d399' : '#10b981'};
-      border-color: ${({ theme }) => theme === 'dark' ? 'rgba(16, 185, 129, 0.3)' : 'rgba(16, 185, 129, 0.2)'};
+      background: ${({ $theme }) => $theme === 'dark' ? 'rgba(16, 185, 129, 0.1)' : 'rgba(16, 185, 129, 0.05)'};
+      color: ${({ $theme }) => $theme === 'dark' ? '#34d399' : '#10b981'};
+      border-color: ${({ $theme }) => $theme === 'dark' ? 'rgba(16, 185, 129, 0.3)' : 'rgba(16, 185, 129, 0.2)'};
       transform: translateY(-50%) scale(1.05);
     }
     
@@ -320,13 +326,13 @@ const StyledWrapper = styled.div`
     transition: all 0.3s ease;
     
     &.empty {
-      background: ${({ theme }) => theme === 'dark' ? '#64748b' : '#cbd5e1'};
+      background: ${({ $theme }) => $theme === 'dark' ? '#64748b' : '#cbd5e1'};
     }
     
     &.valid {
       background: #10b981;
-      box-shadow: 0 0 0 2px ${({ theme }) => 
-        theme === 'dark' ? 'rgba(16, 185, 129, 0.3)' : 'rgba(16, 185, 129, 0.2)'};
+      box-shadow: 0 0 0 2px ${({ $theme }) => 
+        $theme === 'dark' ? 'rgba(16, 185, 129, 0.3)' : 'rgba(16, 185, 129, 0.2)'};
     }
     
     &.invalid {
@@ -337,7 +343,7 @@ const StyledWrapper = styled.div`
 
   .status-text {
     font-size: 12px;
-    color: ${({ theme }) => theme === 'dark' ? '#94a3b8' : '#64748b'};
+    color: ${({ $theme }) => $theme === 'dark' ? '#94a3b8' : '#64748b'};
     font-weight: 500;
   }
 

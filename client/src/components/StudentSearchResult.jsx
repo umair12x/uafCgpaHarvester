@@ -33,10 +33,7 @@ const StudentResultSearch = ({ setStudentResponse, setAlertMessage }) => {
 
     try {
       const userData = { regNo: regNo.trim() };
-      console.log("Fetching data for:", userData);
-      console.log("Using backend URL:", import.meta.env.VITE_BACKEND_URL);
-    //  ${import.meta.env.VITE_BACKEND_URL}/Cgpa/result
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/Cgpa/result`, {
+      const response = await fetch(`https://${import.meta.env.VITE_BACKEND_URL}/Cgpa/result`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -56,7 +53,6 @@ const StudentResultSearch = ({ setStudentResponse, setAlertMessage }) => {
         type: "error",
         message: "Network error. Please check your connection and try again.",
       });
-      console.error("Error:", error);
     } finally {
       setLoading(false);
     }

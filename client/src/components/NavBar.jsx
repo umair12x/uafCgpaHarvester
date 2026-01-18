@@ -9,7 +9,6 @@ import {
   Calculator,
   Info,
   MessageSquare,
- 
   Sparkles,
   ChevronDown,
 } from "lucide-react";
@@ -85,18 +84,8 @@ const NavBar = () => {
 
   // Update active nav when location changes
   useEffect(() => {
-    const hash = location.hash.replace("#", "") || "/home";
+    const hash = location.hash.replace("#", "") || "home";
     setActiveNav(hash);
-
-    // Scroll to section if hash is present
-    if (location.hash) {
-      setTimeout(() => {
-        const element = document.querySelector(location.hash);
-        if (element) {
-          element.scrollIntoView({ behavior: "smooth" });
-        }
-      }, 100);
-    }
   }, [location]);
 
   // Close menu when clicking outside
@@ -110,42 +99,37 @@ const NavBar = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Navigation items
+  // Navigation items - FIXED: Removed "/#" prefix
   const navItems = [
     {
       id: "home",
       label: "Home",
       icon: <Home className="w-4 h-4" />,
       path: "/",
-      hash: "/",
     },
     {
       id: "calculator",
       label: "Calculator",
       icon: <Calculator className="w-4 h-4" />,
       path: "/#calculator",
-      hash: "#calculator",
     },
     {
       id: "gradulator",
       label: "Gradulator",
       icon: <FaGraduationCap className="w-4 h-4" />,
       path: "/#gradulator",
-      hash: "#gradulator",
     },
     {
       id: "about",
       label: "About",
       icon: <Info className="w-4 h-4" />,
       path: "/#about",
-      hash: "#about",
     },
     {
       id: "contact",
       label: "Contact",
       icon: <MessageSquare className="w-4 h-4" />,
       path: "/#contact",
-      hash: "#contact",
     },
   ];
 
@@ -157,14 +141,10 @@ const NavBar = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const handleNavClick = (id, hash) => {
+  const handleNavClick = (id, path) => {
     setActiveNav(id);
     setIsMenuOpen(false);
-
-    // Navigate to the section
-    if (hash) {
-      navigate(hash);
-    }
+    navigate(path);
   };
 
   return (
@@ -189,15 +169,11 @@ const NavBar = () => {
             >
               <Link
                 to="/"
-                onClick={() => {
-                  setActiveNav("home");
-                  navigate("/#home");
-                }}
+                onClick={() => setActiveNav("home")}
                 className="flex items-center gap-2 sm:gap-3"
               >
                 <div className="relative h-10 w-10 1/1">
                   <img src="../logo_icon.png" alt="_logo" className="" />
-                  {/* <Logo size={36} animated={false} showText={false} /> */}
                   <div className="absolute -inset-2 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-full blur opacity-20 -z-10"></div>
                 </div>
                 <div className="hidden sm:block">
@@ -211,16 +187,13 @@ const NavBar = () => {
               </Link>
             </motion.div>
 
-            {/* Desktop Navigation */}
+            {/* Desktop Navigation - FIXED: Simplified onClick */}
             <nav className="hidden md:flex items-center gap-1 lg:gap-2">
               {navItems.map((item) => (
                 <Link
                   key={item.id}
                   to={item.path}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNavClick(item.id, item.hash);
-                  }}
+                  onClick={() => setActiveNav(item.id)}
                   className={`relative flex items-center gap-1.5 px-3 lg:px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                     activeNav === item.id
                       ? "text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20"
@@ -313,7 +286,7 @@ const NavBar = () => {
           </div>
         </div>
 
-        {/* Mobile Navigation Menu */}
+        {/* Mobile Navigation Menu - FIXED: Simplified onClick */}
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div
@@ -329,9 +302,9 @@ const NavBar = () => {
                     <Link
                       key={item.id}
                       to={item.path}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleNavClick(item.id, item.hash);
+                      onClick={() => {
+                        setActiveNav(item.id);
+                        setIsMenuOpen(false);
                       }}
                       className={`flex items-center gap-3 px-4 py-3 rounded-lg text-base font-medium transition-all ${
                         activeNav === item.id
@@ -358,9 +331,9 @@ const NavBar = () => {
                   {/* Mobile CTA Button */}
                   <Link
                     to="/#calculator"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleNavClick("calculator", "#calculator");
+                    onClick={() => {
+                      setActiveNav("calculator");
+                      setIsMenuOpen(false);
                     }}
                     className="flex items-center justify-center gap-2 px-4 py-3 mt-4 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-emerald-500/25 transition-all"
                   >
@@ -368,7 +341,7 @@ const NavBar = () => {
                     <span>Start Calculating</span>
                   </Link>
                 </div>
-                    
+
                 {/* Mobile Footer */}
                 <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700/50">
                   <div className="text-center text-xs text-gray-500 dark:text-gray-400">

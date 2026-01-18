@@ -13,7 +13,6 @@ import {
   Users,
   CheckCircle,
   AlertCircle,
-  Zap,
   Star
 } from "lucide-react";
 import ChartComponent from "./Chart";
@@ -271,7 +270,7 @@ const TableComponent = ({ studentRespone }) => {
                         <h3 className="text-base lg:text-lg font-bold text-gray-800 dark:text-gray-100 truncate">
                           {result.semester}
                         </h3>
-                        <div className={`flex items-center gap-1 px-2 py-1 rounded-full ${performance.bg} ${performance.color} text-xs font-medium`}>
+                        <div className={`flex items-center gap-1 px-2 py-1 rounded-full ${performance.bg} ${performance.color} dark:text-gray-200 text-xs font-medium`}>
                           {performance.icon}
                           <span>{performance.level}</span>
                         </div>

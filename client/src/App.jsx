@@ -75,27 +75,26 @@ const SectionRouter = ({ setAlertMessage }) => {
   const location = useLocation();
 
   useEffect(() => {
-    // Determine target based on Hash OR Pathname (e.g., /calculator -> #calculator)
-    let targetId = location.hash.replace("#", "");
-
-    // If no hash, check if the pathname matches a section ID (for direct links)
-    if (!targetId && location.pathname !== "/" && location.pathname !== "/home") {
-      targetId = location.pathname.replace("/", "");
-    }
-
-    if (targetId) {
+    // Extract hash from location (e.g., #calculator)
+    const hash = location.hash;
+    
+    if (hash) {
       // Use a slight delay to allow the DOM to fully render before scrolling
       setTimeout(() => {
-        const element = document.getElementById(targetId);
+        const element = document.querySelector(hash);
         if (element) {
           // 'scrollIntoView' combined with CSS 'scroll-margin-top' works perfectly
-          element.scrollIntoView({ behavior: "smooth", block: "start" });
+          element.scrollIntoView({ 
+            behavior: "smooth", 
+            block: "start" 
+          });
         }
       }, 100);
-    } else {
+    } else if (location.pathname === "/") {
       // If root path and no hash, scroll to top
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
+    // If pathname is like "/calculator", it will be handled by the router routes below
   }, [location]);
 
   return (
@@ -103,25 +102,41 @@ const SectionRouter = ({ setAlertMessage }) => {
       {/* NOTE: Added 'scroll-mt-28' (approx 7rem) to all sections.
          This ensures the fixed Navbar doesn't cover the section heading when scrolling.
       */}
-      
-      <section id="home" className="scroll-mt-28" aria-labelledby="home-heading">
+
+      <section
+        id="home"
+        className="scroll-mt-28"
+        aria-labelledby="home-heading"
+      >
         <Hero setAlertMessage={setAlertMessage} className="z-10" />
       </section>
 
       <main>
         {/* Manual Calculator */}
-        <section id="calculator" className="scroll-mt-28" aria-labelledby="calculator-heading">
+        <section
+          id="calculator"
+          className="scroll-mt-28"
+          aria-labelledby="calculator-heading"
+        >
           <Calculator setAlertMessage={setAlertMessage} />
         </section>
 
         {/* Automatic/Gradulator Section */}
-        <section id="gradulator" className="scroll-mt-28" aria-labelledby="gradulator-heading">
+        <section
+          id="gradulator"
+          className="scroll-mt-28"
+          aria-labelledby="gradulator-heading"
+        >
           <Responser setAlertMessage={setAlertMessage} />
         </section>
       </main>
 
       {/* About section */}
-      <section id="about" className="scroll-mt-28" aria-labelledby="about-heading">
+      <section
+        id="about"
+        className="scroll-mt-28"
+        aria-labelledby="about-heading"
+      >
         <About />
       </section>
 
@@ -131,7 +146,11 @@ const SectionRouter = ({ setAlertMessage }) => {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="scroll-mt-28" aria-labelledby="contact-heading">
+      <section
+        id="contact"
+        className="scroll-mt-28"
+        aria-labelledby="contact-heading"
+      >
         <Contact />
       </section>
     </div>
@@ -150,7 +169,7 @@ const App = () => {
     if (alertMessage.message) {
       const timer = setTimeout(() => {
         setAlertMessage({ type: "", message: "" });
-      }, 3000);
+      }, 5000); // Increased to 5 seconds for better UX
       return () => clearTimeout(timer);
     }
   }, [alertMessage]);
@@ -183,15 +202,27 @@ const App = () => {
           <meta property="og:type" content="website" />
           <meta property="og:site_name" content="UAF CGPA Calculator" />
           <meta property="og:title" content={SEO_CONFIG.siteTitle} />
-          <meta property="og:description" content={SEO_CONFIG.siteDescription} />
+          <meta
+            property="og:description"
+            content={SEO_CONFIG.siteDescription}
+          />
           <meta property="og:url" content={SEO_CONFIG.siteUrl} />
-          <meta property="og:image" content={`${SEO_CONFIG.siteUrl}/og-image.jpg`} />
+          <meta
+            property="og:image"
+            content={`${SEO_CONFIG.siteUrl}/og-image.jpg`}
+          />
 
           {/* Twitter */}
           <meta name="twitter:card" content="summary_large_image" />
           <meta name="twitter:title" content={SEO_CONFIG.siteTitle} />
-          <meta name="twitter:description" content={SEO_CONFIG.siteDescription} />
-          <meta name="twitter:image" content={`${SEO_CONFIG.siteUrl}/twitter-image.jpg`} />
+          <meta
+            name="twitter:description"
+            content={SEO_CONFIG.siteDescription}
+          />
+          <meta
+            name="twitter:image"
+            content={`${SEO_CONFIG.siteUrl}/twitter-image.jpg`}
+          />
           <meta name="twitter:creator" content={SEO_CONFIG.twitterHandle} />
 
           {/* Structured Data Scripts */}
@@ -206,23 +237,63 @@ const App = () => {
         <NavBar className="z-50" />
 
         {/* Global Alert System */}
-        {alertMessage.message && (
-          <div className="fixed top-20 right-4 z-50 animate-slideIn cursor-pointer rounded-md shadow-lg" onClick={() => setAlertMessage({ type:"", message:"" })}>
-            <Alert alertMessage={alertMessage} />
+        {alertMessage?.message && (
+          <div
+            className="
+              fixed z-50
+              top-4 right-4
+              sm:top-6 sm:right-6
+              md:top-8 md:right-8
+              w-[calc(100vw-2rem)]
+              sm:w-96
+              max-w-full
+              animate-slideInRight
+            "
+          >
+            <div
+              className="cursor-pointer rounded-lg shadow-xl transform transition-transform hover:scale-[1.02] active:scale-[0.98]"
+              onClick={() => setAlertMessage({ type: "", message: "" })}
+            >
+              <Alert
+                alertMessage={alertMessage}
+                autoDismiss={5000}
+                onDismiss={() => setAlertMessage({ type: "", message: "" })}
+              />
+            </div>
           </div>
         )}
 
-        {/* All paths render the SectionRouter because this is a Single Page Scroll App.
-          The SectionRouter handles scrolling to the specific ID based on the path.
-        */}
+        {/* Routes configuration */}
         <Routes>
-          {["/", "/home", "/calculator", "/gradulator", "/about", "/faq", "/contact"].map((path) => (
-            <Route
-              key={path}
-              path={path}
-              element={<SectionRouter setAlertMessage={setAlertMessage} />}
-            />
-          ))}
+          {/* All paths render the SectionRouter because this is a Single Page Scroll App */}
+          <Route
+            path="/"
+            element={<SectionRouter setAlertMessage={setAlertMessage} />}
+          />
+          <Route
+            path="/home"
+            element={<SectionRouter setAlertMessage={setAlertMessage} />}
+          />
+          <Route
+            path="/calculator"
+            element={<SectionRouter setAlertMessage={setAlertMessage} />}
+          />
+          <Route
+            path="/gradulator"
+            element={<SectionRouter setAlertMessage={setAlertMessage} />}
+          />
+          <Route
+            path="/about"
+            element={<SectionRouter setAlertMessage={setAlertMessage} />}
+          />
+          <Route
+            path="/faq"
+            element={<SectionRouter setAlertMessage={setAlertMessage} />}
+          />
+          <Route
+            path="/contact"
+            element={<SectionRouter setAlertMessage={setAlertMessage} />}
+          />
         </Routes>
 
         <MyFooter />

@@ -1,7 +1,6 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  BarChart3,
   TrendingUp,
   TrendingDown,
   BookOpen,
@@ -12,8 +11,6 @@ import {
   ChevronDown,
   Target,
   Sparkles,
-  AlertCircle,
-  GraduationCap,
   LineChart,
   Star
 } from "lucide-react";
