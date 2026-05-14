@@ -33,7 +33,7 @@ const StudentResultSearch = ({ setStudentResponse, setAlertMessage }) => {
 
     try {
       const userData = { regNo: regNo.trim() };
-      const response = await fetch(`https://${import.meta.env.VITE_BACKEND_URL}/Cgpa/result`, {
+      const response = await fetch(`https://${import.meta.env.VITE_BACKEND_URL}/Cgpa/result` || `http://localhost:8080/Cgpa/result`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

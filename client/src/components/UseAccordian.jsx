@@ -1,4 +1,5 @@
 import React, { useState, createContext, useContext } from "react";
+import { cn } from "../utils/cn";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   ChevronDown, 
@@ -19,9 +20,6 @@ import {
 
 
 const AccordionContext = createContext();
-
-
-const cn = (...classes) => classes.filter(Boolean).join(" ");
 
 
 const Accordion = ({ type = "single", collapsible = true, children, className }) => {
